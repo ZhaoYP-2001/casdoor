@@ -13,8 +13,12 @@
 // limitations under the License.
 
 import CryptoJS from "crypto-js";
-import i18next from "i18next";
 import * as Setting from "../Setting";
+
+export const obfuscatorKeyRegex = {
+  "DES": /^[1-9a-f]{16}$/,
+  "AES": /^[1-9a-f]{32}$/,
+};
 
 export function getRandomKeyForObfuscator(obfuscatorType) {
   if (obfuscatorType === "DES") {
@@ -24,23 +28,6 @@ export function getRandomKeyForObfuscator(obfuscatorType) {
   } else {
     return "";
   }
-}
-
-export function checkObfuscatorKey(obfuscatorType, obfuscatorKey) {
-  if (obfuscatorType === "Plain" && obfuscatorKey !== "") {
-    return [false, i18next.t("organization:The key should be empty")];
-  } else if (obfuscatorType === "DES") {
-    const regex = /^[1-9a-f]{16}$/;
-    if (!regex.test(obfuscatorKey)) {
-      return [false, i18next.t("organization:The input key doesn't match the DES regex") + " ^[1-9a-f]{16}$"];
-    }
-  } else if (obfuscatorType === "AES") {
-    const regex = /^[1-9a-f]{32}$/;
-    if (!regex.test(obfuscatorKey)) {
-      return [false, i18next.t("organization:The input key doesn't match the AES regex") + " ^[1-9a-f]{32}$"];
-    }
-  }
-  return [true, ""];
 }
 
 function encrypt(cipher, key, iv, password) {
