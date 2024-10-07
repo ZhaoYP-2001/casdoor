@@ -149,18 +149,6 @@ class LoginPage extends React.Component {
       });
   }
 
-  checkEntryIp(application) {
-    AuthBackend.checkEntryIp(application.organizationObj.owner, application.organizationObj.name, application.owner, application.name)
-      .then((res) => {
-        if (res.status === "error") {
-          this.onUpdateApplication(null);
-          this.setState({
-            msg: res.msg,
-          });
-        }
-      });
-  }
-
   getApplicationLogin() {
     const loginParams = (this.state.type === "cas") ? Util.getCasLoginParameters("admin", this.state.applicationName) : Util.getOAuthGetParameters();
     AuthBackend.getApplicationLogin(loginParams)
@@ -168,7 +156,6 @@ class LoginPage extends React.Component {
         if (res.status === "ok") {
           const application = res.data;
           this.onUpdateApplication(application);
-          this.checkEntryIp(application);
         } else {
           this.onUpdateApplication(null);
           this.setState({
@@ -194,7 +181,6 @@ class LoginPage extends React.Component {
             return ;
           }
           this.onUpdateApplication(res.data);
-          this.checkEntryIp(res.data);
         });
     } else {
       OrganizationBackend.getDefaultApplication("admin", this.state.owner)
@@ -205,7 +191,6 @@ class LoginPage extends React.Component {
             this.setState({
               applicationName: res.data.name,
             });
-            this.checkEntryIp(application);
           } else {
             this.onUpdateApplication(null);
             Setting.showMessage("error", res.msg);
