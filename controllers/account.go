@@ -244,6 +244,10 @@ func (c *ApiController) Signup() {
 		}
 	}
 
+	if invitation != nil && invitation.SignupGroup != "" {
+		user.Groups = []string{invitation.SignupGroup}
+	}
+
 	affected, err := object.AddUser(user)
 	if err != nil {
 		c.ResponseError(err.Error())

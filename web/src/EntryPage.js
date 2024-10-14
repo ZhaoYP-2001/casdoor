@@ -95,6 +95,7 @@ class EntryPage extends React.Component {
         });
     };
 
+
     if (this.state.application?.isRestricted) {
       return Util.renderMessageLarge(this, `${i18next.t("check:Your IP address has been banned according to the configuration of application")} ${this.state.application.name}`);
     }
@@ -103,10 +104,13 @@ class EntryPage extends React.Component {
       return Util.renderMessageLarge(this, `${i18next.t("check:Your IP address has been banned according to the configuration of organization")} ${this.state.application.organizationObj.name}`);
     }
 
+    const isDarkMode = this.props.themeAlgorithm.includes("dark");
+
+
     return (
       <React.Fragment>
         <CustomHead headerHtml={this.state.application?.headerHtml} />
-        <div className="loginBackground"
+        <div className={`${isDarkMode ? "loginBackgroundDark" : "loginBackground"}`}
           style={{backgroundImage: Setting.inIframe() || Setting.isMobile() ? null : `url(${this.state.application?.formBackgroundUrl})`}}>
           <Spin size="large" spinning={this.state.application === undefined && this.state.pricing === undefined} tip={i18next.t("login:Loading")}
             style={{margin: "0 auto"}} />
@@ -133,6 +137,7 @@ class EntryPage extends React.Component {
             <Route exact path="/captcha" render={(props) => <CaptchaPage {...props} />} />
           </Switch>
         </div>
+
       </React.Fragment>
     );
   }
