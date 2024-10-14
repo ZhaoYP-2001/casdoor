@@ -95,7 +95,6 @@ class EntryPage extends React.Component {
         });
     };
 
-
     if (this.state.application?.isRestricted) {
       return Util.renderMessageLarge(this, `${i18next.t("check:Your IP address has been banned according to the configuration of application")} ${this.state.application.name}`);
     }
@@ -105,7 +104,6 @@ class EntryPage extends React.Component {
     }
 
     const isDarkMode = this.props.themeAlgorithm.includes("dark");
-
 
     return (
       <React.Fragment>
