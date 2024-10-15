@@ -56,6 +56,7 @@ func GetClientIpFromRequest(req *http.Request) string {
 			clientIp = strings.TrimLeft(clientIp, "[")
 			clientIp = strings.TrimRight(clientIp, "]")
 		}
+		return clientIp
 	}
 
 	return getIpInfo(clientIp)
